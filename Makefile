@@ -30,18 +30,18 @@ directories:
 
 # Regra para o Linker (junta todos os .o num executável)
 $(EXEC): $(OBJS)
-	@echo "🔨 A linkar o executável..."
+	@echo "linkando executável..."
 	$(CC) $(CFLAGS) $^ -o $@
-	@echo "✅ Compilação terminada com sucesso! Execute: ./$(EXEC)"
+	@echo "Compilação concluída com sucesso! Execute: ./$(EXEC)"
 
 # Regra para compilar cada ficheiro .c individualmente em .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@echo "⚙️  A compilar $<..."
+	@echo "Compilando $<..."
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Regra para limpar o projeto (remove binários e objetos)
 clean:
-	@echo "🧹 A limpar ficheiros temporários..."
+	@echo "Limpando ficheiros temporários..."
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
 # Regra para rodar o programa
