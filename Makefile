@@ -48,7 +48,7 @@ clean:
 run: all
 	@./$(EXEC)
 
-# Regra para verificar memória (Estilo UA - Valgrind)
+# Regra para verificar memória
 valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
 
