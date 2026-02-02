@@ -5,7 +5,7 @@
 
 
 static Folder* create_folder(char* name, Folder* parent){
-	Folder* new_folder = (Folder*)mallloc(sizeof(Folder));
+	Folder* new_folder = (Folder*)malloc(sizeof(Folder));
 
 	if (new_folder == NULL){
 		printf("Error: Failed to allocate memory.\n");
@@ -29,10 +29,10 @@ Folder* create_system(){
 	return create_folder("root", NULL);		//We give as argument for the parent Null since it's the root of the system
 }
 
-void destroy_system(*Folder folder){
+void destroy_system(Folder* folder){
 	//TODO: Implementar função de limpeza
 	if (folder != NULL){
-		printf("DEBUG: A destruir sistema a partir de %s... (Lógica pendente)\n", folder->nome");
+		printf("DEBUG: A destruir sistema a partir de %s... (Lógica pendente)\n", folder->name);
 		free(folder);
 	}
 }

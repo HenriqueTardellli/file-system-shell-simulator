@@ -5,13 +5,13 @@ Folder* root;		//Pointer to the root of the system
 Folder* cur;		//Pointer to the current directory the user is on
 
 int main(){
-	printf("----- Initializing file system -----");
+	printf("----- Initializing file system -----\n");
 
 	root = create_system();
 	cur = root;			//Start off by poiting to the root
 	
 	if (root != NULL){
-		printf("System was built successfully");
+		printf("System was built successfully\n");
 		printf("Current directory: %s\n", cur->name);
 	}
 
