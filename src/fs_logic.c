@@ -36,3 +36,57 @@ void destroy_system(Folder* folder){
 		free(folder);
 	}
 }
+
+void mkdir(Folder* parent, char* name){
+	if(parent == NULL){
+		printf("Error: Current directory is NULL.\n");
+		return;
+	}
+
+	//Checks for duplicated names
+	Folder* temp = parent->F_child;
+
+	while(temp != NULL){
+		if(strcmp(temp->name, name) == 0){
+			printf("Error: Folder '%s' already exists.\n", name);
+			return;
+		}
+		temp = temp->next;
+	}
+	
+	//Create folder
+	Folder* new_folder = create_folder(name, parent);
+	
+	//Insert in linked list
+	if(parent->F_child == NULL){			//Checks if it's the first sub-folder of parent
+		parent->F_child = new_folder;
+	}else{						//If there are others sub-folders inserts in the linked list
+		Folder* i = parent->F_child;
+		while(i->next != NULL){
+			i = i->next;
+		}
+		i->next = new_folder;
+	}
+
+	printf("Folder '%s' created.\n", name);
+}
+
+void ls(Folder* current){
+	if(current == NULL) return;
+
+	printf("Contents of %s:\n", current->name);
+
+	Folder* temp = current->F_child;
+
+	if(temp == NULL){
+		printf("(empty)\n");
+		return;
+	}
+
+	while(temp != NULL) {
+		printf("<DIR> %s\n", temp->name);
+		temp = temp->next;
+	}
+
+	//TODO: Adicionar loop pra files
+}

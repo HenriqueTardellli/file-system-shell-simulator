@@ -1,23 +1,31 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include "fs_logic.h"
 
-Folder* root;		//Pointer to the root of the system
-Folder* cur;		//Pointer to the current directory the user is on
+Folder* root;
+Folder* current; // O nosso 'pwd' (print working directory)
 
-int main(){
-	printf("----- Initializing file system -----\n");
+int main() {
+    printf("--- File System ---\n");
+    
+    root = create_system();
+    current = root; // Começamos na raiz
 
-	root = create_system();
-	cur = root;			//Start off by poiting to the root
-	
-	if (root != NULL){
-		printf("System was built successfully\n");
-		printf("Current directory: %s\n", cur->name);
-	}
+    ls(current);
 
-	// TODO Add loops for the menu
-	
-	destroy_system(root);
+    printf("\n>> mkdir home\n");
+    mkdir(current, "home");
+    
+    printf("\n>> mkdir bin\n");
+    mkdir(current, "bin");
 
-	return 0;
+    printf("\n>> mkdir home (again)\n");
+    mkdir(current, "home");
+
+    printf("\n>> ls\n");
+    ls(current);
+
+    // Limpeza (ainda incompleta, vai limpar só a root por enquanto)
+    destroy_system(root);
+    
+    return 0;
 }

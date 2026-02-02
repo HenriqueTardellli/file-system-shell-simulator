@@ -35,4 +35,8 @@ Folder* create_system();
 
 void destroy_system(Folder* folder);
 
+void mkdir(Folder* parent, char* name);
+
+void ls(Folder* current);
+
 #endif
