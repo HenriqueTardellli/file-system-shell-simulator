@@ -29,12 +29,34 @@ Folder* create_system(){
 	return create_folder("root", NULL);		//We give as argument for the parent Null since it's the root of the system
 }
 
-void destroy_system(Folder* folder){
-	//TODO: Implementar função de limpeza
-	if (folder != NULL){
-		printf("DEBUG: A destruir sistema a partir de %s... (Lógica pendente)\n", folder->name);
-		free(folder);
+static void destroy_files(File* file_list){
+	File* current = file_list;
+	while(current != NULL){
+		File* next_file = current->next;
+		free(current);
+		current = next_file;
 	}
+}
+
+void destroy_system(Folder* folder){
+	if (folder == NULL){
+		return;
+	}
+	
+	Folder* current_child = folder->F_child;
+
+	while(current_child != NULL){				//Recursive implementation for folder deletion, deleting it's contents in the process
+		Folder* next_child = current_child->next;	//We save the child of the current folder for the recursive calling in the next iteration
+
+		destroy_system(current_child);
+
+		current_child = next_child;
+	}
+
+	destroy_files(folder->files);
+
+	printf("DEBUG: Deleting folder '%s'\n", folder->name); 
+    	free(folder);
 }
 
 void mkdir(Folder* parent, char* name){
