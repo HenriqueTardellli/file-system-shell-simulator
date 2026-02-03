@@ -112,3 +112,44 @@ void ls(Folder* current){
 
 	//TODO: Adicionar loop pra files
 }
+
+// Em fs_logic.c
+
+void rm(Folder* current, char* filename) {
+    if (current == NULL || current->files == NULL) {
+        printf("Error: No files to remove.\n");
+        return;
+    }
+
+    File* temp = current->files;
+    File* prev = NULL;
+
+    // Case 1: The file we are removing is the head of the file linked list
+    if (strcmp(temp->name, filename) == 0) {
+        // We make the second element the new head
+        current->files = temp->next; 
+        
+        printf("File '%s' removed.\n", filename);
+        free(temp); // Free the memory of the deleted node
+        return;
+    }
+
+    // Case 2: Search through the list
+    while (temp != NULL && strcmp(temp->name, filename) != 0) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // if temp == NULL the file with the given doesn't exist
+    if (temp == NULL) {
+        printf("Error: File '%s' not found.\n", filename);
+        return;
+    }
+
+    // In case the file does exist
+    // 'prev' will start poiting to 'temp' next node skiping 'temp' leaving it out of the list since no node is pointing to it
+    prev->next = temp->next;
+    
+    printf("File '%s' removed.\n", filename);
+    free(temp);
+}

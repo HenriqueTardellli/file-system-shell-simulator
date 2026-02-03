@@ -39,4 +39,6 @@ void mkdir(Folder* parent, char* name);
 
 void ls(Folder* current);
 
+void rm(Folder* current, char* filename);
+
 #endif
