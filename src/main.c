@@ -1,31 +1,33 @@
 #include <stdio.h>
 #include "fs_logic.h"
-
-Folder* root;
-Folder* current; // O nosso 'pwd' (print working directory)
+\
 
 int main() {
     printf("--- File System ---\n");
     
     root = create_system();
-    current = root; // Começamos na raiz
+    current = root; 
 
+    // 1. Criar pastas
+    mkdir(current, "home");
+    mkdir(current, "etc");
+
+    // 2. Criar ficheiros na raiz
+    touch(current, "kernel.c", "int main() {}");
+    touch(current, "config.cfg", "version=1.0");
+
+    // 3. Tentar criar duplicado
+    touch(current, "kernel.c", "");
+
+    // 4. Ver tudo misturado
+    printf("\n>> ls (root)\n");
     ls(current);
 
-    printf("\n>> mkdir home\n");
-    mkdir(current, "home");
-    
-    printf("\n>> mkdir bin\n");
-    mkdir(current, "bin");
+    // 5. Testar o RM (se já tiveres implementado a lógica que discutimos antes)
+    // printf("\n>> rm kernel.c\n");
+    // rm(current, "kernel.c");
+    // ls(current);
 
-    printf("\n>> mkdir home (again)\n");
-    mkdir(current, "home");
-
-    printf("\n>> ls\n");
-    ls(current);
-
-    // Limpeza (ainda incompleta, vai limpar só a root por enquanto)
     destroy_system(root);
-    
     return 0;
 }

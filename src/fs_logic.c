@@ -93,27 +93,31 @@ void mkdir(Folder* parent, char* name){
 	printf("Folder '%s' created.\n", name);
 }
 
-void ls(Folder* current){
-	if(current == NULL) return;
 
-	printf("Contents of %s:\n", current->name);
+void ls(Folder* current) {
+    if (current == NULL) return;
+    printf("Contents of /.../%s:\n", current->name);
 
-	Folder* temp = current->F_child;
+    
+    Folder* subIdx = current->F_child;
+    while (subIdx != NULL) {
+        printf("[DIR]  %s\n", subIdx->name);
+        subIdx = subIdx->next;
+    }
 
-	if(temp == NULL){
-		printf("(empty)\n");
-		return;
-	}
-
-	while(temp != NULL) {
-		printf("<DIR> %s\n", temp->name);
-		temp = temp->next;
-	}
-
-	//TODO: Adicionar loop pra files
+    
+    File* fileIdx = current->files;
+    while (fileIdx != NULL) {
+        printf("[FILE] %s\n", fileIdx->name);
+        fileIdx = fileIdx->next;
+    }
+    
+    if (current->F_child == NULL && current->files == NULL) {
+        printf("(empty)\n");
+    }
 }
 
-// Em fs_logic.c
+
 
 void rm(Folder* current, char* filename) {
     if (current == NULL || current->files == NULL) {
@@ -152,4 +156,49 @@ void rm(Folder* current, char* filename) {
     
     printf("File '%s' removed.\n", filename);
     free(temp);
+}
+
+// fs_logic.c
+
+//Private function 
+static File* create_file_node(char* name, char* content) {
+    File* new_file = (File*) malloc(sizeof(File));
+    if (new_file == NULL) {
+        printf("Error: Memory allocation failed for file.\n");
+        exit(1);
+    }
+    strncpy(new_file->name, name, MAX_NAME);
+    strncpy(new_file->content, content, MAX_CONTENT);
+    new_file->next = NULL;
+    return new_file;
+}
+
+//Public function
+void touch(Folder* current, char* name, char* content) {
+    if (current == NULL) return;
+
+    
+    File* temp = current->files;
+    while (temp != NULL) {
+        if (strcmp(temp->name, name) == 0) {
+            printf("Error: File '%s' already exists.\n", name);
+            return;
+        }
+        temp = temp->next;
+    }
+
+    // Create node
+    File* new_file = create_file_node(name, content);
+
+    
+    if (current->files == NULL) {
+        current->files = new_file;
+    } else {
+        File* iterator = current->files;
+        while (iterator->next != NULL) {
+            iterator = iterator->next;
+        }
+        iterator->next = new_file;
+    }
+    printf("File '%s' created.\n", name);
 }

@@ -41,4 +41,6 @@ void ls(Folder* current);
 
 void rm(Folder* current, char* filename);
 
+void touch(Folder* current, char* name, char* content);
+
 #endif
