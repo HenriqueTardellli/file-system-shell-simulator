@@ -43,4 +43,10 @@ void rm(Folder* current, char* filename);
 
 void touch(Folder* current, char* name, char* content);
 
+Folder* cd(Folder* current, char* destination);
+
+void burn(Folder* parent, char* folder_name);
+
+void cat(Folder* current, char* name);
+
 #endif

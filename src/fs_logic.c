@@ -202,3 +202,93 @@ void touch(Folder* current, char* name, char* content) {
     }
     printf("File '%s' created.\n", name);
 }
+
+Folder* cd(Folder* current, char* destination) {
+    if (current == NULL) return NULL;
+
+    // Go back to parent
+    if (strcmp(destination, "..") == 0) {
+        if (current->parent != NULL) {
+            return current->parent;
+        } else {
+            printf("Error: Already at root.\n");
+            return current; // Mantém-se onde está
+        }
+    }
+
+    // Enter a sub-folder, by searching
+    Folder* child = current->F_child;
+    
+    while (child != NULL) {
+        if (strcmp(child->name, destination) == 0) {
+            return child; 
+        }
+        child = child->next;
+    }
+
+    printf("Error: Directory '%s' not found.\n", destination);
+    return current;
+}
+
+
+void burn(Folder* parent, char* folder_name) {
+    if (parent == NULL || parent->F_child == NULL) {
+        printf("Error: Directory is empty or invalid.\n");
+        return;
+    }
+
+    Folder* temp = parent->F_child; 
+    Folder* prev = NULL;            
+
+    
+    while (temp != NULL && strcmp(temp->name, folder_name) != 0) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    
+    if (temp == NULL) {
+        printf("Error: Folder '%s' not found.\n", folder_name);
+        return;
+    }
+
+    
+    if (prev == NULL) {
+        parent->F_child = temp->next;
+    } else {
+        prev->next = temp->next;
+    }
+
+    // Isolate node for security
+    temp->next = NULL; 
+
+    // Destroy things inside
+    printf("Burning folder '%s' and all its contents...\n", folder_name);
+    destroy_system(temp);
+}
+
+
+
+
+void cat(Folder* current, char* name) {
+    if (current == NULL || current->files == NULL) {
+        printf("Error: File '%s' not found (directory has no files).\n", name);
+        return;
+    }
+
+    File* temp = current->files;
+    
+    
+    while (temp != NULL) {
+        if (strcmp(temp->name, name) == 0) {
+            printf("-- Content of %s --\n", name);
+            printf("%s\n", temp->content);
+            printf("---------------------\n");
+            return;
+        }
+        temp = temp->next;
+    }
+
+    
+    printf("Error: File '%s' not found.\n", name);
+}
