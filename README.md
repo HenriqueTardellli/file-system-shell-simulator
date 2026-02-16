@@ -5,9 +5,9 @@ The main purpose oftihs project is exploring applications of non-linear data str
 and linear ones like Linked lists.
 
 ## Main functionalities
-- Navigate through directories (`cd`, `cd ..`)
-- Folders and file creation (`mkdir`, `touch`)
-- Structure visualization (`ls`, `tree`)
+- Navigate through directories (`goto`, `goto ..`)
+- Folders and file creation (`new`, `write`)
+- Structure visualization (`list`)
 
 ## How to compile & execute ?
 Execute the command "make run" in  root of the project to compile and run the shell:
