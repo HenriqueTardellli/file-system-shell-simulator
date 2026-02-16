@@ -9,9 +9,6 @@ and linear ones like Linked lists.
 - Folders and file creation (`mkdir`, `touch`)
 - Structure visualization (`ls`, `tree`)
 
-## How to compile ?
-Execute the command "make" in  root of the project:
-$ make
-
-## How to execute ?
-$ ./vfs_shell
+## How to compile & execute ?
+Execute the command "make run" in  root of the project to compile and run the shell:
+$ make run
